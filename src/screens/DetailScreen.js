@@ -7,12 +7,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { getBookDetail, getCoverUrl } from '../services/api';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ErrorMessage from '../components/ErrorMessage';
+import { useFavorites } from '../context/FavoritesContext';
 
 export default function DetailScreen({ navigation, route }) {
   const { book } = route.params;
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToLiked, addToRead, addToFinished, isLiked, isToRead, isFinished } = useFavorites();
 
   const coverUrl = getCoverUrl(book.cover_i || book.covers?.[0], 'L');
   const title = book.title || 'Unknown Title';
@@ -139,11 +141,32 @@ export default function DetailScreen({ navigation, route }) {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.favButton}>
-            <Ionicons name="heart-outline" size={18} color="#0D0D0D" />
-            <Text style={styles.favButtonText}>Tambah ke Favorit</Text>
-          </TouchableOpacity>
+        <Text style={styles.sectionTitle}>Tambah ke Koleksi</Text>
+        <View style={styles.favButtonsRow}>
+        <TouchableOpacity
+            style={[styles.favButton, isLiked(book.key) && styles.favButtonActive]}
+            onPress={() => isLiked(book.key) ? null : addToLiked(book)}
+        >
+            <Ionicons name={isLiked(book.key) ? 'heart' : 'heart-outline'} size={18} color="#0D0D0D" />
+            <Text style={styles.favButtonText}>{isLiked(book.key) ? 'Liked ✓' : 'Liked'}</Text>
+        </TouchableOpacity>
 
+        <TouchableOpacity
+            style={[styles.favButton, isToRead(book.key) && styles.favButtonActive]}
+            onPress={() => isToRead(book.key) ? null : addToRead(book)}
+        >
+            <Ionicons name={isToRead(book.key) ? 'bookmark' : 'bookmark-outline'} size={18} color="#0D0D0D" />
+            <Text style={styles.favButtonText}>{isToRead(book.key) ? 'To Read ✓' : 'To Read'}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+            style={[styles.favButton, isFinished(book.key) && styles.favButtonActive]}
+            onPress={() => isFinished(book.key) ? null : addToFinished(book)}
+        >
+            <Ionicons name={isFinished(book.key) ? 'checkmark-circle' : 'checkmark-circle-outline'} size={18} color="#0D0D0D" />
+            <Text style={styles.favButtonText}>{isFinished(book.key) ? 'Finished ✓' : 'Finished'}</Text>
+        </TouchableOpacity>
+        </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -295,4 +318,27 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
+  favButtonsRow: {
+  flexDirection: 'row',
+  gap: 8,
+  marginBottom: 40,
+},
+favButton: {
+  flex: 1,
+  backgroundColor: '#F5C842',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingVertical: 12,
+  borderRadius: 12,
+  gap: 4,
+},
+favButtonActive: {
+  backgroundColor: '#C9A227',
+},
+favButtonText: {
+  color: '#0D0D0D',
+  fontWeight: 'bold',
+  fontSize: 11,
+},
 });
