@@ -118,7 +118,6 @@ export default function FavoritesScreen() {
 
         {totalBooks === 0 ? (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>📚</Text>
             <Text style={styles.emptyTitle}>No favorites yet</Text>
             <Text style={styles.emptySubtitle}>
               Go to any book and add it to your collection!
