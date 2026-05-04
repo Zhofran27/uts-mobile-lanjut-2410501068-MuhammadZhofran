@@ -57,12 +57,20 @@ npx expo start
 ## Screenshot Preview
 
 <p>
-
+  <img src="screenshots/home.jpeg" width="250" style="margin-right:10px;"/>
+  <img src="screenshots/search.jpeg" width="250" style="margin-right:10px;"/>
+  <img src="screenshots/detail1.jpeg" width="250" style="margin-right:10px;"/>
+  <img src="screenshots/detail2.jpeg" width="250" style="margin-right:10px;"/>
+  <img src="screenshots/favorite.jpeg" width="250" style="margin-right:10px;"/>
+  <img src="screenshots/about.jpeg" width="250" style="margin-right:10px;"/>
 </p>
 
 ## Video Demo
 Link demo aplikasi:
-https://your-video-link.com
+
+Youtube(Unlisted) : [YouTube](https://youtu.be/aZ1EaBi4_MY)
+Google Drive(Public) : [Drive](https://drive.google.com/file/d/13xDgD77YafPgUGQ9Gm0Vh73CyVNsQwBu/view?usp=sharing)
+
 
 ---
 
