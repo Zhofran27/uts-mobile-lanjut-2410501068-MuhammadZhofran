@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   View, Text, ScrollView, StyleSheet,
-  TouchableOpacity, RefreshControl, SafeAreaView,
+  TouchableOpacity, RefreshControl, SafeAreaView, Image,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { getTrendingBooks, getCoverUrl } from '../services/api';
 import BookCard from '../components/BookCard';
 import SectionHeader from '../components/SectionHeader';
 import LoadingIndicator from '../components/LoadingIndicator';
 import ErrorMessage from '../components/ErrorMessage';
 import { Ionicons } from '@expo/vector-icons';
-import { Image } from 'react-native';
 
 export default function HomeScreen({ navigation }) {
+  const insets = useSafeAreaInsets();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -57,12 +58,13 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={styles.safe}>
       <ScrollView
         style={styles.container}
+        contentContainerStyle={{ paddingBottom: 80 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#F5C842" />
         }
       >
         {/* Header */}
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
           <Text style={styles.logo}>BookShelf</Text>
           <View style={styles.headerIcons}>
             <TouchableOpacity onPress={() => navigation.getParent()?.navigate('Search')}>
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingBottom: 16,
   },
   logo: {
     color: '#F5C842',
